@@ -32,7 +32,9 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const ProductCard = props => {
-  const { name, description, category, price } = props
+  const { product, onDelete } = props
+
+  const { name, description, category, price } = product
 
   const classes = useStyles()
 
@@ -64,7 +66,7 @@ const ProductCard = props => {
         <Button color="primary" startIcon={<EditIcon />}>
           Edit
         </Button>
-        <Button color="secondary" startIcon={<DeleteIcon />}>
+        <Button color="secondary" startIcon={<DeleteIcon />} onClick={onDelete}>
           Delete
         </Button>
       </CardActions>

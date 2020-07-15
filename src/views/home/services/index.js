@@ -14,3 +14,16 @@ export const getProducts = async () => {
     console.error(e)
   }
 }
+
+export const deleteProduct = async id => {
+  try {
+    const response = await axios({
+      url: `${baseUrl}/products/${id}`,
+      method: 'DELETE'
+    })
+
+    return response
+  } catch (e) {
+    console.error(e)
+  }
+}
