@@ -8,8 +8,9 @@ const useStyles = makeStyles({
     background: 'lightGray',
     display: 'flex',
     flexDirection: 'column',
-    height: '100vh',
-    justifyContent: 'center'
+    height: '100%',
+    justifyContent: 'center',
+    minHeight: '100vh'
   }
 })
 
@@ -20,7 +21,6 @@ const DefaultLayout = props => {
 
   return (
     <Box className={classes.root}>
-      <Box>Layout</Box>
       <Suspense fallback="loading...">{renderRoutes(route.routes)}</Suspense>
     </Box>
   )
