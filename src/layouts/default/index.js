@@ -1,11 +1,12 @@
 import React, { Suspense } from 'react'
 import { Box, makeStyles } from '@material-ui/core'
 import { renderRoutes } from 'react-router-config'
+import { palette } from 'constants.js'
 
 const useStyles = makeStyles({
   root: {
     alignItems: 'center',
-    background: 'lightGray',
+    background: palette.light,
     display: 'flex',
     flexDirection: 'column',
     height: '100%',

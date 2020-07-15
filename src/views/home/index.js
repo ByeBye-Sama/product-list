@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import { map } from 'lodash'
-import { CircularProgress, Grid, Box, makeStyles } from '@material-ui/core'
-import { ProductCard, DeleteModal } from 'components'
-import { getProducts, deleteProduct } from './services'
+import { Box, Grid, CircularProgress, makeStyles } from '@material-ui/core'
+import { DeleteModal, UpsertModal } from 'components'
+import { ProductCard, ProductForm, Header } from './components'
+import {
+  getProducts,
+  deleteProduct,
+  updateProduct,
+  createProduct
+} from './services'
 
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
     height: '100%',
+    marginTop: theme.spacing(8),
     padding: theme.spacing(3)
+  },
+  loader: {
+    alignItems: 'center',
+    display: 'flex',
+    height: `100vh`
   }
 }))
 
@@ -19,9 +31,15 @@ const HomeScreen = () => {
 
   const [isDeleting, setIsDeleting] = useState(false)
 
+  const [reloadData, setReloadData] = useState(!false)
+
   const [selectedProduct, setSelectedProduct] = useState()
 
   const [isDeleteModalOpen, showDeleteModal] = useState(false)
+
+  const [isEditModalOpen, showEditModal] = useState(false)
+
+  const [isCreateModalOpen, showCreateModal] = useState(false)
 
   const [products, setProducts] = useState([])
 
@@ -37,24 +55,34 @@ const HomeScreen = () => {
     }
 
     loadProducts()
-  }, [])
+  }, [reloadData])
 
-  const removeProduct = async id => {
+  const onDeleteProduct = async () => {
     setIsDeleting(true)
 
-    const response = await deleteProduct(id)
+    const response = await deleteProduct(selectedProduct.id)
 
     if (response.status === 200) {
-      const newProducts = products.filter(product => product.id !== id)
-
-      setProducts(newProducts)
+      setReloadData(!reloadData)
 
       setIsDeleting(false)
     }
   }
 
-  if (isLoading) {
-    return <CircularProgress size={60} />
+  const onEditProduct = async values => {
+    const response = await updateProduct(selectedProduct.id, values)
+
+    if (response.status === 200) {
+      setReloadData(!reloadData)
+    }
+  }
+
+  const onCreateProduct = async values => {
+    const response = await createProduct(values)
+
+    if (response.status === 201) {
+      setReloadData(!reloadData)
+    }
   }
 
   const renderProducts = product => {
@@ -62,6 +90,11 @@ const HomeScreen = () => {
       <Grid item xs key={product.id}>
         <ProductCard
           product={product}
+          onEdit={() => {
+            setSelectedProduct(product)
+
+            showEditModal(true)
+          }}
           onDelete={() => {
             setSelectedProduct(product)
 
@@ -72,23 +105,62 @@ const HomeScreen = () => {
     )
   }
 
+  const renderContent = () => {
+    if (isLoading) {
+      return (
+        <Box className={classes.loader}>
+          <CircularProgress size={60} />
+        </Box>
+      )
+    }
+
+    return (
+      <>
+        <Box className={classes.root}>
+          <Grid container spacing={3}>
+            {map(products, renderProducts)}
+          </Grid>
+        </Box>
+        {isDeleteModalOpen && (
+          <DeleteModal
+            isOpen={isDeleteModalOpen}
+            loading={isDeleting}
+            onClose={() => showDeleteModal(false)}
+            onConfirm={() => onDeleteProduct()}
+            title="product"
+            type={selectedProduct.name}
+          />
+        )}
+        {isEditModalOpen && (
+          <UpsertModal
+            initialValues={selectedProduct}
+            isOpen={isEditModalOpen}
+            onClose={() => showEditModal(false)}
+            onSubmit={onEditProduct}
+            title={`Update ${selectedProduct.name}`}
+          >
+            <ProductForm />
+          </UpsertModal>
+        )}
+        {isCreateModalOpen && (
+          <UpsertModal
+            isOpen={isCreateModalOpen}
+            onClose={() => showCreateModal(false)}
+            onSubmit={onCreateProduct}
+            title="Create product"
+            actionButtonLabel="create"
+          >
+            <ProductForm />
+          </UpsertModal>
+        )}
+      </>
+    )
+  }
+
   return (
     <>
-      <Box className={classes.root} height="100%" flexGrow="1" padding={3}>
-        <Grid container spacing={3}>
-          {map(products, renderProducts)}
-        </Grid>
-      </Box>
-      {isDeleteModalOpen && (
-        <DeleteModal
-          isOpen={isDeleteModalOpen}
-          loading={isDeleting}
-          onClose={() => showDeleteModal(false)}
-          onConfirm={() => removeProduct(selectedProduct.id)}
-          title="producto"
-          type={selectedProduct.name}
-        />
-      )}
+      <Header onCreate={() => showCreateModal(true)} />
+      {renderContent()}
     </>
   )
 }

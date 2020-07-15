@@ -4,29 +4,39 @@ import {
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
+  makeStyles
 } from '@material-ui/core'
 import { Button } from 'components'
+import { palette } from 'constants.js'
+
+const useStyles = makeStyles(theme => ({
+  actions: {
+    background: palette.light,
+    padding: theme.spacing(2)
+  }
+}))
 
 const DeleteModal = props => {
   const { isOpen, onClose, onConfirm, loading, type, title } = props
 
+  const classes = useStyles()
+
   return (
     <Dialog fullWidth maxWidth="xs" onClose={onClose} open={isOpen}>
-      <DialogTitle>{`Eliminar ${title}`}</DialogTitle>
+      <DialogTitle>{`Delete ${title}`}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          {`¿Deseas eliminar ${type}?`}
+          {`¿Do you want to remove ${type}?`}
           <br />
-          Los datos no podrán ser recuperados
+          The data cannot be recovered
         </DialogContentText>
       </DialogContent>
-      <DialogActions>
+      <DialogActions className={classes.actions}>
         <Button onClick={onClose} variant="outlined">
-          CANCELAR
+          Cancel
         </Button>
         <Button
-          autoFocus
           color="secondary"
           loading={loading}
           onClick={async () => {
@@ -36,7 +46,7 @@ const DeleteModal = props => {
           }}
           variant="contained"
         >
-          Eliminar
+          Delete
         </Button>
       </DialogActions>
     </Dialog>
