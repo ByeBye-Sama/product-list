@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
     position: 'relative'
   },
   loader: {
+    color: 'black',
     position: 'absolute'
   }
 }))
@@ -32,7 +33,7 @@ const Button = props => {
           <Box style={{ visibility: 'hidden' }}>{children}</Box>
           <CircularProgress
             className={classes.loader}
-            color={loaderColor || 'white'}
+            color={loaderColor}
             size={24}
           />
         </>
