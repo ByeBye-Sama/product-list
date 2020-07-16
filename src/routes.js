@@ -1,7 +1,7 @@
 import React, { lazy } from 'react'
 import { Redirect } from 'react-router-dom'
 import { routesPath } from './constants'
-import { DefaultLayout } from './layouts'
+import { DefaultLayout, AuthLayout } from './layouts'
 
 const routes = [
   // {
@@ -28,6 +28,17 @@ const routes = [
   //     }
   //   ]
   // },
+  {
+    path: '/auth',
+    component: AuthLayout,
+    routes: [
+      {
+        path: routesPath.LOGIN,
+        exact: true,
+        component: lazy(() => import('views/login'))
+      }
+    ]
+  },
   {
     route: '*',
     component: DefaultLayout,

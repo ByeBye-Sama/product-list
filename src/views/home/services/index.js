@@ -1,12 +1,20 @@
 import axios from 'axios'
+import { sessionManager } from 'utils'
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL
+
+const { token } = sessionManager
+
+const auth = {
+  Authorization: `Bearer ${token}`
+}
 
 export const getProducts = async () => {
   try {
     const response = await axios({
       url: `${baseUrl}/products`,
-      method: 'GET'
+      method: 'GET',
+      headers: auth
     })
 
     return response
@@ -20,7 +28,8 @@ export const createProduct = async values => {
     const response = await axios({
       url: `${baseUrl}/products`,
       data: values,
-      method: 'POST'
+      method: 'POST',
+      headers: auth
     })
 
     return response
@@ -33,7 +42,8 @@ export const deleteProduct = async id => {
   try {
     const response = await axios({
       url: `${baseUrl}/products/${id}`,
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: auth
     })
 
     return response
@@ -47,7 +57,8 @@ export const updateProduct = async (id, values) => {
     const response = await axios({
       url: `${baseUrl}/products/${id}`,
       data: values,
-      method: 'PUT'
+      method: 'PUT',
+      headers: auth
     })
 
     return response

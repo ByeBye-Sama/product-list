@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { map } from 'lodash'
+import { map, get } from 'lodash'
 import { Box, Grid, CircularProgress, makeStyles } from '@material-ui/core'
 import { DeleteModal, UpsertModal } from 'components'
 import { ProductCard, ProductForm, Header } from './components'
@@ -47,7 +47,7 @@ const HomeScreen = () => {
     const loadProducts = async () => {
       const response = await getProducts()
 
-      if (response.status === 200) {
+      if (get(response, 'status') === 200) {
         setProducts(response.data.products)
 
         setIsLoading(false)
@@ -62,7 +62,7 @@ const HomeScreen = () => {
 
     const response = await deleteProduct(selectedProduct.id)
 
-    if (response.status === 200) {
+    if (get(response, 'status') === 200) {
       setReloadData(!reloadData)
 
       setIsDeleting(false)
@@ -72,7 +72,7 @@ const HomeScreen = () => {
   const onEditProduct = async values => {
     const response = await updateProduct(selectedProduct.id, values)
 
-    if (response.status === 200) {
+    if (get(response, 'status') === 200) {
       setReloadData(!reloadData)
     }
   }
@@ -80,7 +80,7 @@ const HomeScreen = () => {
   const onCreateProduct = async values => {
     const response = await createProduct(values)
 
-    if (response.status === 201) {
+    if (get(response, 'status') === 201) {
       setReloadData(!reloadData)
     }
   }

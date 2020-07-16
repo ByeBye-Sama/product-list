@@ -1,11 +1,15 @@
 import React from 'react'
-import { Box, makeStyles, Typography, IconButton } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 import AddBoxIcon from '@material-ui/icons/AddBox'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
+import { Box, makeStyles, Typography, IconButton } from '@material-ui/core'
+import { sessionManager } from 'utils'
+import { palette, routesPath } from 'constants.js'
 
 const useStyles = makeStyles(theme => ({
   root: {
     alignItems: 'center',
-    background: `linear-gradient(to right, #355c7d, #6c5b7b, #c06c84)`,
+    background: palette.gradient,
     display: 'flex',
     height: theme.spacing(8),
     justifyContent: 'space-between',
@@ -24,13 +28,24 @@ const Header = props => {
 
   const classes = useStyles()
 
+  const history = useHistory()
+
+  const onLogout = async () => {
+    sessionManager.logout()
+
+    await history.push(routesPath.LOGIN)
+  }
+
   return (
     <Box boxShadow={6} className={classes.root}>
       <Typography variant="h5" className={classes.title}>
         Product CRUD
       </Typography>
-      <IconButton edge="end" onClick={onCreate}>
+      <IconButton onClick={onCreate}>
         <AddBoxIcon fontSize="large" className={classes.title} />
+      </IconButton>
+      <IconButton onClick={onLogout} edge="end">
+        <ExitToAppIcon fontSize="large" className={classes.title} />
       </IconButton>
     </Box>
   )
