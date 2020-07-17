@@ -2,8 +2,8 @@
   "files": {
     "static/js/0.0586b77d.chunk.js": "/product-list/static/js/0.0586b77d.chunk.js",
     "static/js/0.0586b77d.chunk.js.map": "/product-list/static/js/0.0586b77d.chunk.js.map",
-    "main.js": "/product-list/static/js/main.d90bc81f.chunk.js",
-    "main.js.map": "/product-list/static/js/main.d90bc81f.chunk.js.map",
+    "main.js": "/product-list/static/js/main.8d09bb61.chunk.js",
+    "main.js.map": "/product-list/static/js/main.8d09bb61.chunk.js.map",
     "runtime-main.js": "/product-list/static/js/runtime-main.db90953a.js",
     "runtime-main.js.map": "/product-list/static/js/runtime-main.db90953a.js.map",
     "static/js/3.1c26ddc3.chunk.js": "/product-list/static/js/3.1c26ddc3.chunk.js",
@@ -15,13 +15,13 @@
     "static/js/6.359ad0f2.chunk.js": "/product-list/static/js/6.359ad0f2.chunk.js",
     "static/js/6.359ad0f2.chunk.js.map": "/product-list/static/js/6.359ad0f2.chunk.js.map",
     "index.html": "/product-list/index.html",
-    "precache-manifest.fed3edfb973a810517e7a17d95a76be6.js": "/product-list/precache-manifest.fed3edfb973a810517e7a17d95a76be6.js",
+    "precache-manifest.f059f9013be222579c3e1815a372a987.js": "/product-list/precache-manifest.f059f9013be222579c3e1815a372a987.js",
     "service-worker.js": "/product-list/service-worker.js",
     "static/js/3.1c26ddc3.chunk.js.LICENSE.txt": "/product-list/static/js/3.1c26ddc3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.db90953a.js",
     "static/js/3.1c26ddc3.chunk.js",
-    "static/js/main.d90bc81f.chunk.js"
+    "static/js/main.8d09bb61.chunk.js"
   ]
 }
