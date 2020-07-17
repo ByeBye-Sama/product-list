@@ -1,11 +1,11 @@
 import React from 'react'
-import { get } from 'lodash'
+import { get, pick } from 'lodash'
 import { makeStyles } from '@material-ui/core'
 import { Form, Field } from 'react-final-form'
 import { TextField } from 'final-form-material-ui'
 import { useRouter } from 'hooks'
 import { Button } from 'components'
-import { sessionManager } from 'utils'
+import { sessionManager, getValidator, formConstraints } from 'utils'
 import { routesPath } from 'constants.js'
 import { signUp } from '../../services'
 
@@ -29,6 +29,10 @@ const RegisterForm = () => {
 
   const { history } = useRouter()
 
+  const fieldNames = ['name', 'email', 'password', 'c_password']
+
+  const formValidator = getValidator(pick(formConstraints, fieldNames))
+
   const onSubmit = async values => {
     const response = await signUp(values)
 
@@ -43,7 +47,7 @@ const RegisterForm = () => {
 
   return (
     <>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit} validate={formValidator}>
         {formProps => {
           const { handleSubmit, submitting, pristine } = formProps
 

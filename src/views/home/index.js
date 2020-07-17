@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { map, get } from 'lodash'
+import { map, get, pick } from 'lodash'
 import { Box, Grid, CircularProgress, makeStyles } from '@material-ui/core'
 import { DeleteModal, UpsertModal } from 'components'
+import { getValidator, formConstraints } from 'utils'
 import { ProductCard, ProductForm, Header } from './components'
 import {
   getProducts,
@@ -43,6 +44,10 @@ const HomeScreen = () => {
 
   const [products, setProducts] = useState([])
 
+  const fieldNames = ['name', 'description', 'category', 'price']
+
+  const formValidator = getValidator(pick(formConstraints, fieldNames))
+
   useEffect(() => {
     const loadProducts = async () => {
       const response = await getProducts()
@@ -74,6 +79,8 @@ const HomeScreen = () => {
 
     if (get(response, 'status') === 200) {
       setReloadData(!reloadData)
+
+      showEditModal(false)
     }
   }
 
@@ -82,6 +89,8 @@ const HomeScreen = () => {
 
     if (get(response, 'status') === 201) {
       setReloadData(!reloadData)
+
+      showCreateModal(false)
     }
   }
 
@@ -137,7 +146,8 @@ const HomeScreen = () => {
             isOpen={isEditModalOpen}
             onClose={() => showEditModal(false)}
             onSubmit={onEditProduct}
-            title={`Update ${selectedProduct.name}`}
+            title={`Update ${get(selectedProduct, 'name')}`}
+            validate={formValidator}
           >
             <ProductForm />
           </UpsertModal>
@@ -148,6 +158,7 @@ const HomeScreen = () => {
             onClose={() => showCreateModal(false)}
             onSubmit={onCreateProduct}
             title="Create product"
+            validate={formValidator}
             actionButtonLabel="create"
           >
             <ProductForm />

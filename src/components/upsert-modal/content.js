@@ -52,11 +52,7 @@ const Content = props => {
           variant="contained"
           loading={loading}
           disabled={disabled}
-          onClick={async () => {
-            await onSubmit()
-
-            onClose()
-          }}
+          onClick={onSubmit}
         >
           {actionButtonLabel}
         </Button>
