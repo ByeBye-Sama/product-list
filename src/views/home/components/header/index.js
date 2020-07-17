@@ -16,7 +16,8 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(0, 3),
     position: 'fixed',
     top: 0,
-    width: '100%'
+    width: '100%',
+    zIndex: 9999
   },
   title: {
     color: 'white'
