@@ -48,7 +48,7 @@ const ProductCard = props => {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" align="right">
-            $ {price.toFixed(2)}
+            {Number.parseFloat(price).toFixed(2)}
           </Typography>
           <Divider />
           <Typography variant="caption" className={classes.category}>

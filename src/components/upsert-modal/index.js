@@ -2,7 +2,7 @@ import React from 'react'
 import { Form } from 'react-final-form'
 import Content from './content'
 
-const ModalWrapper = props => {
+const UpsertModal = props => {
   const {
     children,
     initialValues,
@@ -37,4 +37,4 @@ const ModalWrapper = props => {
   )
 }
 
-export default ModalWrapper
+export default UpsertModal
