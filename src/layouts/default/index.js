@@ -1,7 +1,9 @@
 import React, { Suspense } from 'react'
-import { Box, makeStyles } from '@material-ui/core'
+import { Box, makeStyles, LinearProgress } from '@material-ui/core'
 import { renderRoutes } from 'react-router-config'
-import { palette } from 'constants.js'
+import { useRouter } from 'hooks'
+import { sessionManager } from 'utils'
+import { palette, routesPath } from 'constants.js'
 
 const useStyles = makeStyles({
   root: {
@@ -20,9 +22,23 @@ const DefaultLayout = props => {
 
   const classes = useStyles()
 
+  const { history } = useRouter()
+
+  const { isLoggedIn } = sessionManager
+
+  if (!isLoggedIn) {
+    sessionManager.logout()
+
+    history.push(routesPath.LOGIN)
+
+    window.location.reload()
+  }
+
   return (
     <Box className={classes.root}>
-      <Suspense fallback="loading...">{renderRoutes(route.routes)}</Suspense>
+      <Suspense fallback={<LinearProgress />}>
+        {renderRoutes(route.routes)}
+      </Suspense>
     </Box>
   )
 }

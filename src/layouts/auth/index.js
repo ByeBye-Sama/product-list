@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react'
-import { Box, makeStyles } from '@material-ui/core'
+import { Box, makeStyles, LinearProgress } from '@material-ui/core'
 import { renderRoutes } from 'react-router-config'
 import { palette } from 'constants.js'
 
@@ -23,7 +23,9 @@ const AuthLayout = props => {
 
   return (
     <Box className={classes.root}>
-      <Suspense fallback="loading...">{renderRoutes(route.routes)}</Suspense>
+      <Suspense fallback={<LinearProgress />}>
+        {renderRoutes(route.routes)}
+      </Suspense>
     </Box>
   )
 }

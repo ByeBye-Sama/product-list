@@ -1,10 +1,11 @@
 import React from 'react'
 import { get } from 'lodash'
-import { useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
 import { Form, Field } from 'react-final-form'
 import { TextField } from 'final-form-material-ui'
+import { useRouter } from 'hooks'
 import { Button } from 'components'
+import { sessionManager } from 'utils'
 import { routesPath } from 'constants.js'
 import { signUp } from '../../services'
 
@@ -26,15 +27,17 @@ const useStyles = makeStyles(theme => ({
 const RegisterForm = () => {
   const classes = useStyles()
 
-  const history = useHistory()
+  const { history } = useRouter()
 
   const onSubmit = async values => {
     const response = await signUp(values)
 
     if (get(response, 'status') === 200) {
-      console.log('response', response)
+      sessionManager.login(response.data.data)
 
       await history.push(routesPath.HOME)
+
+      window.location.reload()
     }
   }
 

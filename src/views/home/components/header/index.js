@@ -1,8 +1,8 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import AddBoxIcon from '@material-ui/icons/AddBox'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import { Box, makeStyles, Typography, IconButton } from '@material-ui/core'
+import { useRouter } from 'hooks'
 import { sessionManager } from 'utils'
 import { palette, routesPath } from 'constants.js'
 
@@ -28,7 +28,7 @@ const Header = props => {
 
   const classes = useStyles()
 
-  const history = useHistory()
+  const { history } = useRouter()
 
   const onLogout = async () => {
     sessionManager.logout()
