@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { sessionManager } from 'utils'
 
-const baseUrl = process.env.REACT_APP_API_BASE_URL
+const baseUrl = 'https://product-crud-api-byebye.herokuapp.com/api'
 
 const { token } = sessionManager
 
