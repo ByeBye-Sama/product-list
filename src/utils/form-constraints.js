@@ -17,7 +17,7 @@ const formConstraints = {
       message: 'Confirm your password'
     },
     equality: {
-      attribute: 'createPassword',
+      attribute: 'password',
       message: 'Password and their confirmation do not match'
     }
   },
